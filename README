@@ -34,7 +34,7 @@ Run a container from the image
 docker run -d -p 8081:8080 --name mycontainer image-name:version    {8080 port is taken by jenkins}
 
 Check your system IP in browser :
-IP:8080/devops
+IP:8081/devops
 
 
 Lab completed**
