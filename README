@@ -18,8 +18,6 @@ docker // you can install docker :
  
  systemctl start docker
 ---
-post installing you can fecth the code from github account by clone the repo https://github.com/techlanders/Maven-Project.git
-git clone https://github.com/techlanders/Maven-Project.git
 
 use maven to clean the previous builds and  package the war file 
 mvn clean
