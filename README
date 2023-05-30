@@ -19,6 +19,17 @@ docker // you can install docker :
  systemctl start docker
 ---
 
+
+systemctl status jenkins
+  482  vi /usr/lib/systemd/system/jenkins.service
+  483  cat /usr/lib/systemd/system/jenkins.service
+  484  clear
+  485  systemctl daemon-reload
+  486  systemctl restart jenkins
+
+-------
+
+
 use maven to clean the previous builds and  package the war file 
 mvn clean
 mvn package
