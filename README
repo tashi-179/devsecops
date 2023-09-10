@@ -6,7 +6,7 @@ To use this, your system (Centos 7) should have below tools installed:
 git  //you can use "yum install git -y" for this
 
 
-maven  insallation : insall latest version
+maven  insallation : install latest version instead of mvn install on terminal..
 
 wget https://dlcdn.apache.org/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bin.tar.gz
   114  tar -xvzf apache-maven-3.9.4-bin.tar.gz 
@@ -14,6 +14,10 @@ wget https://dlcdn.apache.org/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bi
   128  ln -s  /root/apache-maven-3.9.4/bin/mvn  /usr/bin/
   129  mvn --version
 
+java installation : latest 
+
+yum update -y
+   35  yum install openjdk-17-jdk
 
 
 jenkins //follow the installation guideline at https://www.jenkins.io/doc/book/installing/#red-hat-centos
