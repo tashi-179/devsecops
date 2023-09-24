@@ -14,8 +14,7 @@ wget https://dlcdn.apache.org/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bi
   128  ln -s  /root/apache-maven-3.9.4/bin/mvn  /usr/bin/
   129  mvn --version
 
-java installation : latest 
-
+java installation : latest (skip it if jenkins alread insalled with java 11)
 yum update -y
    35  yum install openjdk-17-jdk
 
