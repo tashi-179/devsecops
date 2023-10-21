@@ -36,6 +36,6 @@
         <version>3.3.2</version>
       </plugin>
     </plugins>
-    <finalName>rk</finalName>
+    <finalName>devops</finalName>
   </build>
 </project>
