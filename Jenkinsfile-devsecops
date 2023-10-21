@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Scan') {
             steps {
-              //add insallation name and check version of sq used in jenkins
+# add insallation name and check version of sq used in jenkins
               withSonarQubeEnv(installationName: 'sonar') { 
                 sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:5.0.1.3006:sonar'
               }
