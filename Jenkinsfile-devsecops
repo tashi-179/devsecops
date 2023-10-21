@@ -2,6 +2,7 @@ pipeline {
     agent any
     stages {
 /*
+
         stage('Sonar Scan') {
             steps {
               // add insallation name and check version of sq used in jenkins
@@ -10,6 +11,20 @@ pipeline {
               }
             }
         }
+       stage('Static Analysis') {
+            steps {
+                // Perform static code analysis (e.g., using linters, code quality tools)
+                // You can add more steps here for specific tools
+            }
+        }
+
+stage('Quality Gates') {
+            steps {
+                // Implement quality gates, security checks, or other criteria
+                // to determine whether the deployment is successful
+            }
+        }
+
 */
         stage('Build') {
             steps {
