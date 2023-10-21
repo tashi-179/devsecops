@@ -5,7 +5,7 @@ pipeline {
             steps {
               // add insallation name and check version of sq used in jenkins
               withSonarQubeEnv(installationName: 'sonar') { 
-                sh 'mvn clean package sonar-maven-plugin:5.0.1.3006:sonar'
+                sh 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:5.0.1.3006:sonar'
               }
             }
         }
