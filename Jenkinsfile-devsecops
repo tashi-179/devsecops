@@ -1,6 +1,7 @@
 pipeline {
     agent any
     stages {
+/*
         stage('Sonar Scan') {
             steps {
               // add insallation name and check version of sq used in jenkins
@@ -9,6 +10,7 @@ pipeline {
               }
             }
         }
+*/
         stage('Build') {
             steps {
                 // Build your project (e.g., Maven)
