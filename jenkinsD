@@ -43,7 +43,7 @@ pipeline {
         }
         stage('OWASP ZAP Scan') {
             steps {
-                sh 'docker run -v "$(pwd)":/zap/wrk:rw -t owasp/zap2docker-stable zap-baseline.py -t http://54.91.54.68:8081/devops/ -g gen.conf -r report.html'
+                sh 'docker run -t owasp/zap2docker-stable zap-baseline.py -t http://54.91.54.68:8080/devops -g gen.conf -r report.html'
                 
                 script {
                     def zapReport = readFile('report.html')
