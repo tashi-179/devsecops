@@ -43,9 +43,9 @@ pipeline {
         }
         stage('OWASP ZAP Scan') {
             steps {
-                sh 'docker run -v /var/lib/jenkins/workspace/p2:/zap/wrk/:rw -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py  -t http://54.91.54.68:8081/devops/ -g gen.conf -r testreport.html'
+                sh 'docker run -v /var/lib/jenkins/workspace/p2/:/zap/wrk/ -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py  -t http://54.91.54.68:8081/devops/ -g gen.conf -r testreport.html'
                 script {
-                    def zapReport = readFile('report.html')
+                    def zapReport = readFile('testreport.html')
                     if (zapReport.contains("0 alerts")) {
                         echo 'No vulnerabilities found in the OWASP ZAP scan.'
                     } else {
@@ -58,9 +58,11 @@ pipeline {
 
     post {
         success {
+            echo "Pipeline currentResult: ${currentBuild.currentResult}"
             echo 'Pipeline completed successfully'
         }
         failure {
+            echo "Pipeline currentResult: ${currentBuild.currentResult}"
             echo 'Pipeline failed'
         }
     }
