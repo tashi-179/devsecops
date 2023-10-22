@@ -1,16 +1,15 @@
 pipeline {
     agent any
     stages {
-/*
-
         stage('Sonar Scan') {
             steps {
-              // add insallation name and check version of sq used in jenkins
-              withSonarQubeEnv(installationName: 'sonar') { 
-                sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:5.0.1.3006:sonar'
+              // add insallation name 
+              withSonarQubeEnv(credentialsId: 'sonacred') {
+              sh 'mvn sonar:sonar'
               }
             }
         }
+/*
        stage('Static Analysis') {
             steps {
                 // Perform static code analysis (e.g., using linters, code quality tools)
