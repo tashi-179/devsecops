@@ -36,6 +36,11 @@ pipeline {
                 sh 'trivy --no-progress --exit-code 1 --severity HIGH,CRITICAL image-name:version'
             }
         }
+        stage('Deploy') {
+            steps {
+                sh 'docker run -d -p 8081:8080 --name mynewcontainer image-name:version'
+            }
+        }
         stage('OWASP ZAP Scan') {
             steps {
                 sh 'docker run -v "$(pwd)":/zap/wrk:rw -t owasp/zap2docker-stable zap-baseline.py -t http://54.91.54.68:8081/devops/ -g gen.conf -r report.html'
@@ -49,12 +54,7 @@ pipeline {
                     }
                 }
             }
-        }
-        stage('Deploy') {
-            steps {
-                sh 'docker run -d -p 8081:8080 --name mynewcontainer image-name:version'
-            }
-        }
+        }        
     }
 
     post {
