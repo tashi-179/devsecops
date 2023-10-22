@@ -43,7 +43,7 @@ pipeline {
         }
         stage('OWASP ZAP Scan') {
             steps {
-                sh 'docker run -v /var/lib/jenkins/workspace/p2/:/zap/wrk/ -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py  -t http://54.91.54.68:8081/devops/ -g gen.conf -r testreport.html'
+                sh 'docker run -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t http://54.91.54.68:8081/devops/'
                 script {
                     def zapReport = readFile('testreport.html')
                     if (zapReport.contains("0 alerts")) {
