@@ -5,7 +5,7 @@ pipeline {
             steps {
               // add insallation name 
               withSonarQubeEnv(credentialsId: 'sonacred') {
-              sh 'mvn sonar:sonar'
+              sh 'mvn clean package sonar:sonar'
               }
             }
         }
