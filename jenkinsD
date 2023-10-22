@@ -43,8 +43,7 @@ pipeline {
         }
         stage('OWASP ZAP Scan') {
             steps {
-                sh 'docker run -v /var/lib/jenkins/workspace/p2:/zap/wrk -t owasp/zap2docker-stable zap-baseline.py -t http://54.91.54.68:8081/devops/ -g /tmp/zap/gen.conf -r /tmp/zap/report.html'
-                
+                sh 'docker run -v "$(pwd)":/zap/wrk:rw -t owasp/zap2docker-stable zap-baseline.py -t http://54.91.54.68:8081/devops/ -g gen.conf -r report.html'
                 script {
                     def zapReport = readFile('report.html')
                     if (zapReport.contains("0 alerts")) {
