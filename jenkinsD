@@ -1,66 +1,67 @@
 pipeline {
     agent any
     stages {
-        stage('Sonar Scan Static Analsis ') {
+        stage('Sonar Scan Static Analysis') {
             steps {
-              // add insallation name 
-              withSonarQubeEnv(credentialsId: 'sonacred',installationName: 'sonar') {
-              sh 'mvn clean package sonar:sonar -Dsonar.projectKey=test'
-              }
+                withSonarQubeEnv(credentialsId: 'sonacred', installationName: 'sonar') {
+                    sh 'mvn clean package sonar:sonar -Dsonar.projectKey=test'
+                }
             }
         }
         stage('Quality Gates') {
             steps {
-              // Implement quality gates criteria timeout 
-              timeout(time: 2, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true 
-              }
-            }  
+                timeout(time: 2, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
         }
         stage('Build') {
             steps {
-                // Build your project (e.g., Maven)
                 sh 'mvn clean package'
             }
         }
-
-        stage('removal') {
+        stage('Removal') {
             steps {
-                // removal of prev containers and images
                 sh 'docker rm -f mynewcontainer'
-                sh 'docker rmi `docker images`|| echo "Command 3 failed with exit code $?"'
+                sh 'docker rmi `docker images` || echo "Command 3 failed with exit code $?"'
             }
         }
-
         stage('Docker Build') {
             steps {
-                // Build a Docker image
                 sh 'docker build -t image-name:version .'
             }
         }
-
         stage('Security Scanning') {
             steps {
-                // Scan the Docker image for security vulnerabilities (e.g., Trivy)
                 sh 'trivy --no-progress --exit-code 1 --severity HIGH,CRITICAL image-name:version'
             }
         }
-
+        stage('OWASP ZAP Scan') {
+            steps {
+                sh 'docker run -v "$(pwd)":/zap/wrk:rw -t owasp/zap2docker-stable zap-baseline.py -t http://54.91.54.68:8081/devops/ -g gen.conf -r report.html'
+                
+                script {
+                    def zapReport = readFile('report.html')
+                    if (zapReport.contains("0 alerts")) {
+                        echo 'No vulnerabilities found in the OWASP ZAP scan.'
+                    } else {
+                        error('OWASP ZAP scan found vulnerabilities. Failing the pipeline.')
+                    }
+                }
+            }
+        }
         stage('Deploy') {
             steps {
-                // Deploy the Docker image to your environment (e.g., Kubernetes, Docker Swarm)
                 sh 'docker run -d -p 8081:8080 --name mynewcontainer image-name:version'
             }
         }
     }
-    
+
     post {
         success {
-            // Actions to take on a successful pipeline run
             echo 'Pipeline completed successfully'
         }
         failure {
-            // Actions to take on a failed pipeline run
             echo 'Pipeline failed'
         }
     }
