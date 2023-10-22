@@ -52,6 +52,12 @@ pipeline {
                 sh 'docker run -d -p 8081:8080 --name mynewcontainer image-name:version'
             }
         }
+
+       stage('DAST-Analysis') {
+          steps {
+            sh 'docker run -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t http://54.91.54.68:8081/devops/ || echo "Command 3 failed with exit code $?"'
+           }
+          } 
     }
     
     post {
