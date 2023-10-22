@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Sonar Scan') {
+        stage('Sonar Scan Static Analsis ') {
             steps {
               // add insallation name 
               withSonarQubeEnv(credentialsId: 'sonacred',installationName: 'sonar') {
@@ -9,22 +9,14 @@ pipeline {
               }
             }
         }
-/*
-       stage('Static Analysis') {
+        stage('Quality Gates') {
             steps {
-                // Perform static code analysis (e.g., using linters, code quality tools)
-                // You can add more steps here for specific tools
-            }
+              // Implement quality gates criteria timeout 
+              timeout(time: 2, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true 
+              }
+            }  
         }
-
-stage('Quality Gates') {
-            steps {
-                // Implement quality gates, security checks, or other criteria
-                // to determine whether the deployment is successful
-            }
-        }
-
-*/
         stage('Build') {
             steps {
                 // Build your project (e.g., Maven)
