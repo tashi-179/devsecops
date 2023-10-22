@@ -5,7 +5,7 @@ pipeline {
             steps {
               // add insallation name 
               withSonarQubeEnv(credentialsId: 'sonacred',installationName: 'sonar') {
-              sh 'mvn clean package org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar -Dsonar.projectKey=test'
+              sh 'mvn clean package sonar:sonar -Dsonar.projectKey=test'
               }
             }
         }
