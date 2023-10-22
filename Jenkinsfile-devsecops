@@ -4,7 +4,7 @@ pipeline {
         stage('Sonar Scan') {
             steps {
               // add insallation name 
-              withSonarQubeEnv(credentialsId: 'sonacred') {
+              withSonarQubeEnv(credentialsId: 'sonacred',installationName: 'Sonar') {
               sh 'mvn clean package sonar:sonar'
               }
             }
